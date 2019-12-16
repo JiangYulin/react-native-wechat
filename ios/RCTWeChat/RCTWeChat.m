@@ -366,9 +366,10 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     req.bText = NO;
     req.scene = aScene;
     req.message = message;
-
-    BOOL success = [WXApi sendReq:req];
-    callback(@[success ? [NSNull null] : INVOKE_FAILED]);
+				     dispatch_async(dispatch_get_main_queue(), ^{
+        BOOL success = [WXApi sendReq:req];
+        callback(@[success ? [NSNull null] : INVOKE_FAILED]);
+    });
 }
 
 #pragma mark - wx callback
